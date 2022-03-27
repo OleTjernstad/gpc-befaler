@@ -6,6 +6,7 @@ int gamer_sequence[MAX_LEVEL];
 int level = 1;
 int note = 0;
 int velocity = 1000;
+int running = 0;
 
 const int LED1 = 13;
 const int LED2 = 12;
@@ -93,9 +94,11 @@ void loop()
     if (digitalRead(S_START) == LOW)
     {
         digitalWrite(LED_RUNNING, HIGH);
+        delay(200);
+        running = 1; // Start the game
     }
 
-    if (digitalRead(S_START) == LOW || level != 1)
+    if (running == 1 || level != 1)
     { // start button
 
         show_sequence();
@@ -264,6 +267,7 @@ void right_sequence()
 
 void wrong_sequence()
 {
+    digitalWrite(LED_RUNNING, LOW);
     for (int i = 0; i < 3; i++)
     {
         digitalWrite(LED1, HIGH);
@@ -280,6 +284,7 @@ void wrong_sequence()
         noTone(SPEAKER);
         delay(250);
     }
+    running = 0;
     level = 1;
     velocity = 500;
 }
