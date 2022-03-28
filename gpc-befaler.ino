@@ -1,5 +1,5 @@
 
-const int MAX_LEVEL = 100;
+const int MAX_LEVEL = 4;
 int sequence[MAX_LEVEL];
 int sound[MAX_LEVEL];
 int gamer_sequence[MAX_LEVEL];
@@ -20,7 +20,7 @@ const int S2 = A1;
 const int S3 = A2;
 const int S4 = A3;
 
-const int S_START = 4;
+const int S_START = A4;
 
 const int SPEAKER = 3;
 
@@ -29,6 +29,12 @@ const int SPEAKER = 3;
 #define NOTE_A3 220
 #define NOTE_B3 247
 #define NOTE_C4 262
+
+// include the library code:
+#include <LiquidCrystal.h>
+
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(8, 7, 5, 4, 2, A5);
 
 // notes in the melody:
 int melody[] = {
@@ -40,6 +46,10 @@ int noteDurations[] = {
 
 void setup()
 {
+    // set up the LCD's number of columns and rows:
+    lcd.begin(16, 2);
+    // Print a message to the LCD.
+    lcd.print("Trykk start");
 
     Serial.begin(9600);
 
@@ -94,13 +104,21 @@ void loop()
     if (digitalRead(S_START) == LOW)
     {
         digitalWrite(LED_RUNNING, HIGH);
+        lcd.setCursor(0, 0);
+        lcd.print("Runde:         ");
+
         delay(200);
         running = 1; // Start the game
     }
 
     if (running == 1 || level != 1)
-    { // start button
-
+    {
+        if (level < MAX_LEVEL)
+        {
+            // Print level number to screen
+            lcd.setCursor(7, 0);
+            lcd.print(level);
+        }
         show_sequence();
         get_sequence();
     }
@@ -258,6 +276,13 @@ void right_sequence()
     digitalWrite(LED4, LOW);
     delay(500);
 
+    if (level == MAX_LEVEL)
+    {
+        lcd.setCursor(0, 0);
+        lcd.print("Gratulerer");
+        lcd.setCursor(0, 1);
+        lcd.print("Koden: 1548");
+    }
     if (level < MAX_LEVEL)
     {
         level++;
@@ -267,6 +292,8 @@ void right_sequence()
 
 void wrong_sequence()
 {
+    lcd.setCursor(0, 0);
+    lcd.print("Feil !!!  "); // Notify user that the answer was wrong
     digitalWrite(LED_RUNNING, LOW);
     for (int i = 0; i < 3; i++)
     {
