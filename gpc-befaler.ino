@@ -15,10 +15,10 @@ const int LED4 = 10;
 
 const int LED_RUNNING = 9;
 
-const int S1 = 8;
-const int S2 = 7;
-const int S3 = 6;
-const int S4 = 5;
+const int S1 = A0;
+const int S2 = A1;
+const int S3 = A2;
+const int S4 = A3;
 
 const int S_START = 4;
 
