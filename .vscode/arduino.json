@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "simons.ino"
+    "sketch": "gpc-befaler.ino",
+    "port": "COM3"
 }
