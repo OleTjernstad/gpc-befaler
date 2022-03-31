@@ -28,7 +28,12 @@ const int SPEAKER = 3;
 #define NOTE_G3 196
 #define NOTE_A3 220
 #define NOTE_B3 247
-#define NOTE_C4 262
+
+#define NOTE_GS3 208
+
+#define NOTE_AS3 233
+
+#define NOTE_D4 294
 
 // include the library code:
 #include <LiquidCrystal.h>
@@ -39,10 +44,26 @@ LiquidCrystal lcd(8, 7, 5, 4, 2, A5);
 // notes in the melody:
 int melody[] = {
     NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4};
-
 // note durations: 4 = quarter note, 8 = eighth note, etc.:
 int noteDurations[] = {
     4, 8, 8, 4, 4, 4, 4, 4};
+
+// notes in the melody:
+int melody2[] = {
+    NOTE_C4,
+    NOTE_C4,
+    NOTE_C4,
+    NOTE_C4,
+    NOTE_GS3,
+    NOTE_AS3,
+    NOTE_C4,
+    NOTE_C4,
+    NOTE_D4,
+};
+
+// note durations: 4 = quarter note, 8 = eighth note, etc.:
+int noteDurations2[] = {
+    8, 8, 8, 4, 4, 8, 4, 2};
 
 void setup()
 {
@@ -279,6 +300,23 @@ void right_sequence()
 
     if (level == MAX_LEVEL)
     {
+        // iterate over the notes of the melody:
+        for (int thisNote = 0; thisNote < 9; thisNote++)
+        {
+
+            // to calculate the note duration, take one second
+            // divided by the note type.
+            // e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+            int noteDuration = 1000 / noteDurations2[thisNote];
+            tone(SPEAKER, melody2[thisNote], noteDuration);
+
+            // to distinguish the notes, set a minimum time between them.
+            // the note's duration + 30% seems to work well:
+            int pauseBetweenNotes = noteDuration * 1.30;
+            delay(pauseBetweenNotes);
+            // stop the tone playing:
+            noTone(SPEAKER);
+        }
         lcd.setCursor(0, 0);
         lcd.print("Gratulerer");
         lcd.setCursor(0, 1);
