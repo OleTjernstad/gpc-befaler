@@ -1,5 +1,5 @@
 
-const int MAX_LEVEL = 15;
+const int MAX_LEVEL = 11;
 int sequence[MAX_LEVEL];
 int sound[MAX_LEVEL];
 int gamer_sequence[MAX_LEVEL];
@@ -139,6 +139,8 @@ void loop()
             // Print level number to screen
             lcd.setCursor(7, 0);
             lcd.print(level);
+            lcd.setCursor(0, 1);
+            lcd.print('              ');
         }
 
         show_sequence();
@@ -338,6 +340,8 @@ void wrong_sequence()
 
     lcd.setCursor(0, 0);
     lcd.print("Feil !!!  "); // Notify user that the answer was wrong
+    lcd.setCursor(0, 1);
+    lcd.print("Trykk start"); // Notify user that the answer was wrong
 
     digitalWrite(LED_RUNNING, LOW);
     for (int i = 0; i < 3; i++)
