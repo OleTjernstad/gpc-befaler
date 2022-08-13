@@ -1,5 +1,5 @@
 
-const int MAX_LEVEL = 11;
+const int MAX_LEVEL = 10;
 int sequence[MAX_LEVEL];
 int sound[MAX_LEVEL];
 int gamer_sequence[MAX_LEVEL];
@@ -140,7 +140,6 @@ void loop()
             lcd.setCursor(7, 0);
             lcd.print(level);
             lcd.setCursor(0, 1);
-            lcd.print('              ');
         }
 
         show_sequence();
@@ -322,7 +321,7 @@ void right_sequence()
         lcd.setCursor(0, 0);
         lcd.print("Gratulerer");
         lcd.setCursor(0, 1);
-        lcd.print("Koden: 1548");
+        lcd.print("Koden: 42682");
         running = 0;
         digitalWrite(LED_RUNNING, LOW);
         level = 1;
@@ -332,7 +331,7 @@ void right_sequence()
     {
         level++;
     }
-    velocity -= 50; // increases difficulty
+    velocity -= 40; // increases difficulty
 }
 
 void wrong_sequence()
